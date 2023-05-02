@@ -1,0 +1,13 @@
+body{
+    background-image: url('backgroundimage.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+
+}
+p{
+    text-align:center;
+}
+
+
+
+
