@@ -94,10 +94,19 @@ button {
 
 <body>
 
+
     <!--In the body we add our content -->
     <div class='row'>
             <div class='col'>
-            <?php include './navbar.php'; ?>
+            <?php include './navbar.php'; 
+                    session_start();
+                    if (isset($_COOKIE['currentUser'])){
+                        echo "<script>document.getElementsByName('leaderboard')[0].style.display='';</script>";
+                    } else{
+                        echo "<script>window.location.replace('./index.php');</script>";
+                        }
+            ?>
+
             </div>
     </div>
     <div class="container text-center">
@@ -195,6 +204,7 @@ button {
           card_matches += 1;
           if (card_matches == (card_array.length/2)){
             console.log("done");
+            setCookie('userScore',score,5);
           }
 
 
@@ -223,6 +233,12 @@ button {
 
     }
     var step = 1000
+    function setCookie(cname, cvalue, expirydays) {
+      const date = new Date();
+      date.setTime(d.getTime() + (expirydays*24*60*60*1000));
+      let expires = "expires="+ date.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
     
     function timeSpent(){
       var timeNow = Date.now();

@@ -73,7 +73,6 @@ when input is invalid chnage it to this
         <button type="submit" name='registerButton' class="btn btn-primary">Register</button>
         <?php
             session_start();
-            $userScore = 0;
             $nickname ='';
             $userAvatar ='';
 
@@ -95,9 +94,11 @@ when input is invalid chnage it to this
                 if (preg_match($pattern,$nickname)){
                     echo "\n unsuitable username";
                     echo "<script>elem = document.getElementById('basic-addon4'); elem.style.visibility='visible';document.getElementsByName('nickname')[0].className='form-control is-invalid';document.getElementById('nickNameBox').setAttribute('value','$nickname'); console.log('it happened');</script>";
-                } else{ echo "\n suitable username <script>elem = document.getElementById('basic-addon4'); elem.style.visibility='hidden'; elem.style.bordercolor=''; console.log('it happened');</script>";
+                } else{ 
+                    echo "\n suitable username <script>elem = document.getElementById('basic-addon4'); elem.style.visibility='hidden'; elem.style.bordercolor=''; console.log('it happened');</script>";
                      $firstreg += 1;
-                     setcookie("currentUser",$nickname, time() + (86400*5), "/"); }
+                     setcookie("currentUser",$nickname, time() + (86400*5), "/");
+                    $_SESSION['currentUser']= $nickname; }
             }
             }
             $cookievalue = [$nickname,$userScore,$userAvatar];

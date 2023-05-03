@@ -8,6 +8,7 @@
     <style>
         .main{
             text-align:center;
+            color:whitesmoke;
             position:absolute;
             top: 50%;
             left:50%;
@@ -28,13 +29,22 @@
 <body>
 
     <!--In the body we add our content -->
-    <?php include './navbar.php'; ?>
+    <?php 
+        include './navbar.php';
+    ?>
     <div class='main'>
-
     <h1 >Welcome to Pairs</h1>
+    <?php 
+        session_start() ;
+        if (isset($_COOKIE['currentUser'])){
+            echo "<a style='background-color:green;'class='btn btn-success btn-lg' href='./bootspairs.php' role='button'>Click Here To Play</a>";
+            echo "<script>document.getElementsByName('leaderboard')[0].style.display='';</script>";
+        } else{
+            echo "<h3 id='not_welcome'>You're not using a registered session?</h3> <a class='icon-link icon-link-hover' style='--bs-icon-link-transform: translate3d(0, -.125rem, 0);' href='./registration.php'><svg class='bi' aria-hidden='true'><use xlink:href='#clipboard'></use></svg><h3 id='not_welcome'>Register now</h3></a>";
+            }
+    ?>
     <br/>
-    <button id='not_welcome'  type="button" class="btn btn-success btn-lg">Click Here To Play</button>
-    <h3 id='not_welcome'>You're not using a registered session? Register now</h3>
+
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

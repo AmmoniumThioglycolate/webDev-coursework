@@ -36,10 +36,10 @@
 	</head>
 	<body>
 
-		<ul class="menu">
+		<ul id='menuNav' class="menu">
 			<li><a href="./index.php">Home</a></li>
-			<li style="float:right"><a href="./pairs.php">Play Pairs</a></li>
-			<li style="float:right"><a href="./leaderboard.php">Leaderboard</a></li>
+			<li style="float:right"><a href="./bootspairs.php">Play Pairs</a></li>
+			<li name ='leaderboard' style="float:right;display:none;"><a href="./leaderboard.php">Leaderboard</a></li>
 			<li style="float:right"><a href="./registration.php">Register</a></li>						
 		</ul>
 

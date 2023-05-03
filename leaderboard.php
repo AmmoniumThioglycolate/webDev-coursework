@@ -38,10 +38,54 @@
 
 <body>
     <!--In the body we add our content -->
-    <?php include './navbar.php'; ?>
+    <?php 
+        include './navbar.php'; 
+        session_start() ;
+        if (isset($_COOKIE['currentUser'])){
+            echo "<script>document.getElementsByName('leaderboard')[0].style.display='';</script>";
+            } else{
+                echo "<script>window.location.replace('./index.php');</script>";
+                }
+            
+
+                /*$table = $_SESSION['usersPast']; */
+
+
+        if(!empty( $_SESSION['usersPast'])){
+            $table = $_SESSION['usersPast'];
+            $table[$_COOKIE['currentUser']] = $_COOKIE['userScore'];
+            $table['regtur'] = 65;
+            $table['reggy'] = 64;
+            $table['regg4'] = 60;
+            $table['regga'] = 7;
+            arsort($table);
+            $_SESSION['usersPast'] = $table; 
+        } else{
+            $table[$_COOKIE['currentUser']] = $_COOKIE['userScore'];
+            $table['regtur'] = 65;
+            $table['reggy'] = 64;
+            $table['regg4'] = 60;
+            $table['regga'] = 7;
+            arsort($table);
+            $_SESSION['usersPast'] = $table; 
+
+        }
+        foreach($_SESSION['usersPast'] as $x => $x_value) {
+            echo "<script>  populateTable('$x','$x_value');</script>";
+          }
+        
+            
+
+
+
+
+
+                ?>
+
+
     <br/><br/>
     <div class="board">
-        <table style="margin-bottom:0;"class="table table-striped-column table-hover">
+        <table id="leadertable" style="margin-bottom:0;"class="table table-striped-column table-hover">
             <thead>
                 <tr style="text-align:center">
                     <th colspan="3">Pairs Leaderboard</th>
@@ -54,7 +98,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>test data</td>
+                    <td></td>
                     <td>Test data</td>
                     <td>Test data</td>
                 </tr>
@@ -71,9 +115,23 @@
     </div>
 
 
-  
+    <script >
+             function populateTable(username,mark){
+                let tableTag = document.createElement('tr');
+                
+                tableTag.innerHTML = '<td>' + username + '</td>' + '<td>' + mark + '</td>';
+                
+               document.getElementsByTagName('tbody')[0].append(tableTag);
+                
+            };
+
+
+
+
+    </script>
 
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
 </html>
