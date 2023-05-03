@@ -54,7 +54,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Test data</td>
+                    <td>test data</td>
                     <td>Test data</td>
                     <td>Test data</td>
                 </tr>

@@ -13,7 +13,6 @@
         top: 50%;
         left:50%;
         transform: translate(-50%, -50%);
-        width:80%;
         margin:auto;
         color:aliceblue;
     }
@@ -35,10 +34,10 @@
   
   <div class="main-components">
     <h3>Welcome to the registration page. Please fill in your data in order to play Pairs.</h3>
-    <form>
+    <form action="#" method="POST">
         <h5>Please type in your nickname</h5>
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="Enter a nickname">
+            <input  id="nickNameBox" name = "nickname"  class="form-control" id="floatingInput" placeholder="Enter a nickname"/>
              <label style="color:black"for="floatingInput">Nickname</label>
    <!--In the body we add our content 
    <form class="form-floating">
@@ -51,7 +50,7 @@ when input is invalid chnage it to this
 
 -->
         </div>
-        <div style="color:white "class="form-text" id="basic-addon4">Your nickname must not include: ”! @#%&^*()+={}[] —;: “’<>? /</div>
+        <div style="visibility:hidden;width:79%;color:white;font-weight:bold;background-color:red;" class="form-text" id="basic-addon4">Your nickname must not include: ”!@#%&^*()+={}[] —;:“’<>?/</div>
 
   
     <p>Select your avatar</p>
@@ -71,9 +70,42 @@ when input is invalid chnage it to this
             </tr>
         </table>
         <br/>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" name='registerButton' class="btn btn-primary">Register</button>
+        <?php
+            session_start();
+            $userScore = 0;
+            $nickname ='';
+            $userAvatar ='';
+
+            if (!empty($_POST['nickname'])){
+                $nickname = $_POST['nickname'];
+                echo $nickname;
+                } 
+                else {echo "no nickname was entered";}
+            if (!empty($_POST['avatar'])){
+                    $userAvatar = $_POST['avatar'];
+                    } 
+                    else {echo "no avatar was selected";}
+                    $firstreg = 0;
+            $pattern = '/\W/'; //used to detect any non-word character
+            if(isset($_POST['registerButton']) and $firstreg == 0){
+            echo "register button";
+            if (!empty($_POST['nickname'])){
+                $firstreg += 1;
+                if (preg_match($pattern,$nickname)){
+                    echo "\n unsuitable username";
+                    echo "<script>elem = document.getElementById('basic-addon4'); elem.style.visibility='visible';document.getElementsByName('nickname')[0].className='form-control is-invalid';document.getElementById('nickNameBox').setAttribute('value','$nickname'); console.log('it happened');</script>";
+                } else{ echo "\n suitable username <script>elem = document.getElementById('basic-addon4'); elem.style.visibility='hidden'; elem.style.bordercolor=''; console.log('it happened');</script>";
+                     $firstreg += 1;
+                     setcookie("currentUser",$nickname, time() + (86400*5), "/"); }
+            }
+            }
+            $cookievalue = [$nickname,$userScore,$userAvatar];
+
+        ?>
     </form>
   </div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
