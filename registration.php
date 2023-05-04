@@ -29,7 +29,15 @@
 
 <body>
     <!--In the body we add our content -->
-    <?php include './navbar.php'; ?>
+    <?php 
+        include './navbar.php';
+        session_start() ;
+        if (isset($_COOKIE['currentUser'])){
+            echo "<script>document.getElementsByName('leaderboard')[0].style.display='';</script>";
+            } else{
+                
+                }
+     ?>
     <br/><br/>
   
   <div class="main-components">

@@ -235,7 +235,7 @@ button {
     var step = 1000
     function setCookie(cname, cvalue, expirydays) {
       const date = new Date();
-      date.setTime(d.getTime() + (expirydays*24*60*60*1000));
+      date.setTime(date.getTime() + (expirydays*24*60*60*1000));
       let expires = "expires="+ date.toUTCString();
       document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }

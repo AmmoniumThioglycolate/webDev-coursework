@@ -21,17 +21,20 @@
         padding:13px;
         box-shadow: 6px 6px 7px 5px red ;
         align-content:center;
+        overflow: auto ;
             
     }
     table {
         border:2px;
         min-height: 50vh;
+        min-width:80%;
         background-color:white;
         margin-bottom: 0;
     }
     thead{
         background-color: rgb(25, 167, 206) ;
     }
+    @media only screen and (max-width:756px){}
 
     </style>
   </head>
@@ -39,7 +42,53 @@
 <body>
     <!--In the body we add our content -->
     <?php 
-        include './navbar.php'; 
+        include './navbar.php'; ?>
+
+
+
+    <br/><br/>
+    <div class="board">
+        <table id="leadertable" style="margin-bottom:0;"class="table table-striped-column table-hover">
+            <thead>
+                <tr style="text-align:center">
+                    <th colspan="2">Pairs Leaderboard</th>
+                </tr>
+                <tr style="background-color:rgb(175, 211, 226)">
+                    <th>Player Name</th>
+                    <th id="noStyle">Score</th>
+                </tr>
+            </thead>
+            <tbody id='tbody'></tbody>
+        </table>
+
+    </div>
+
+
+    <script >
+        //import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+        
+             function populateTable(username,mark){
+                console.log('hello');
+                let table = document.getElementById('tbody');
+                console.log(table);
+                let row = table.insertRow(-1); 
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+            
+
+   // Add data to c1 and c2
+                cell1.innerText = username;
+                cell2.innerText = mark;
+
+
+            console.log(document.getElementsByTagName('table').innerHTML);
+            };
+
+
+
+
+    </script>
+            <?php
         session_start() ;
         if (isset($_COOKIE['currentUser'])){
             echo "<script>document.getElementsByName('leaderboard')[0].style.display='';</script>";
@@ -54,81 +103,17 @@
         if(!empty( $_SESSION['usersPast'])){
             $table = $_SESSION['usersPast'];
             $table[$_COOKIE['currentUser']] = $_COOKIE['userScore'];
-            $table['regtur'] = 65;
-            $table['reggy'] = 64;
-            $table['regg4'] = 60;
-            $table['regga'] = 7;
             arsort($table);
             $_SESSION['usersPast'] = $table; 
         } else{
             $table[$_COOKIE['currentUser']] = $_COOKIE['userScore'];
-            $table['regtur'] = 65;
-            $table['reggy'] = 64;
-            $table['regg4'] = 60;
-            $table['regga'] = 7;
             arsort($table);
             $_SESSION['usersPast'] = $table; 
-
         }
         foreach($_SESSION['usersPast'] as $x => $x_value) {
             echo "<script>  populateTable('$x','$x_value');</script>";
           }
-        
-            
-
-
-
-
-
                 ?>
-
-
-    <br/><br/>
-    <div class="board">
-        <table id="leadertable" style="margin-bottom:0;"class="table table-striped-column table-hover">
-            <thead>
-                <tr style="text-align:center">
-                    <th colspan="3">Pairs Leaderboard</th>
-                </tr>
-                <tr style="background-color:rgb(175, 211, 226)">
-                    <th>Player Name</th>
-                    <th id="noStyle">Score</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td>Test data</td>
-                    <td>Test data</td>
-                </tr>
-                <tr>
-                    <td>Test data</td>
-                    <td>Test data</td>
-                    <td>Test data</td>
-                </tr>
-                
-               
-        </tbody>
-        </table>
-
-    </div>
-
-
-    <script >
-             function populateTable(username,mark){
-                let tableTag = document.createElement('tr');
-                
-                tableTag.innerHTML = '<td>' + username + '</td>' + '<td>' + mark + '</td>';
-                
-               document.getElementsByTagName('tbody')[0].append(tableTag);
-                
-            };
-
-
-
-
-    </script>
 
 </body>
 

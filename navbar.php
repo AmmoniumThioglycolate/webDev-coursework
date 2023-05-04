@@ -26,7 +26,20 @@
             font-family: "Verdana";
 
 		}
+		#floaters{
+			float:right;
+		}
 		ul.menu li a:hover{background-color:rgb(13,140,255);}
+		@media only screen and (max-width:756px){
+			#floaters{
+			float:left;
+			
+		}
+		ul.menu li{float: left;
+		margin-left:25vw;}
+
+	}
+
 
 
 
@@ -38,9 +51,10 @@
 
 		<ul id='menuNav' class="menu">
 			<li><a href="./index.php">Home</a></li>
-			<li style="float:right"><a href="./bootspairs.php">Play Pairs</a></li>
-			<li name ='leaderboard' style="float:right;display:none;"><a href="./leaderboard.php">Leaderboard</a></li>
-			<li style="float:right"><a href="./registration.php">Register</a></li>						
+			<li id ='floaters'><a href="./bootspairs.php">Play Pairs</a></li>
+			<li id ='floaters' name ='leaderboard' style="display:none;"><a href="./leaderboard.php">Leaderboard</a></li>
+			<li id ='floaters'><a href="./registration.php">Register</a></li>						
 		</ul>
+		
 
     </body>
