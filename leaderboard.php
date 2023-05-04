@@ -83,10 +83,6 @@
 
             console.log(document.getElementsByTagName('table').innerHTML);
             };
-
-
-
-
     </script>
             <?php
         session_start() ;
@@ -112,8 +108,8 @@
         }
         foreach($_SESSION['usersPast'] as $x => $x_value) {
             echo "<script>  populateTable('$x','$x_value');</script>";
-          }
-                ?>
+          } ?>
+
 
 </body>
 
