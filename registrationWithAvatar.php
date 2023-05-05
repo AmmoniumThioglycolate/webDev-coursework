@@ -20,21 +20,36 @@
     border-style:groove;
     border-width:7px;
     border-color:blue;
-    background-color: whitesmoke;
+    background-color: papayawhip;
 
+    }
+    th{
+        text-align:center;
+
+    }
+
+    td{
+        width: 9vh;
     }
     img{
         height:8vh;
         width:8vh;
+        
+    }
+    .skinImages img{
+        margin-left:25%;
     }
     th {
         color:black;
     }
+    h3{
+        margin-top: 5vh;
+    }
 
 
     </style>
+    <script src ='./script.js'></script>
   </head>
-
 <body>
     <!--In the body we add our content -->
     <?php 
@@ -70,103 +85,142 @@ when input is invalid chnage it to this
 
   
     <p>Select your avatar</p>
-         <table>
+         <table name = 'table'>
             <tr>
                 <th colspan=6>Select a skin hue</th>
             </tr>
-            <tr>
-                <td colspan=2><img src='./emoji assets/skin/green.png'/></td>
-                <td colspan=2><img src='./emoji assets/skin/red.png'/></td>
-                <td colspan=2><img src='./emoji assets/skin/yellow.png'/></td>
+            <tr class='skinImages'>
+                <td colspan=2><img onclick="select(this)" src='./emoji assets/skin/green.png'/></td>
+                <td colspan=2><img onclick="select(this)" src='./emoji assets/skin/red.png'/></td>
+                <td colspan=2><img onclick="select(this)" src='./emoji assets/skin/yellow.png'/></td>
             </tr>
-            <tr colspan=6><th>Select your eyes</th></tr>
             <tr>
-                <td><img src='./emoji assets/eyes/closed.png'/></td>
-                <td><img src='./emoji assets/eyes/laughing.png'/></td>
-                <td><img src='./emoji assets/eyes/long.png'/></td>
-                <td><img src='./emoji assets/eyes/normal.png'/></td>
-                <td><img src='./emoji assets/eyes/rolling.png'/></td>
-                <td><img src='./emoji assets/eyes/winking.png'/></td>
+                <th colspan=6>Select your eyes</th>
             </tr>
-            <tr colspan=6><th>Select your mouth</th></tr>
-            <tr>
-                <td><img src='./emoji assets/mouth/open.png'/></td>
-                <td><img src='./emoji assets/mouth/sad.png'/></td>
-                <td><img src='./emoji assets/mouth/smiling.png'/></td>
-                <td><img src='./emoji assets/mouth/straight.png'/></td>
-                <td><img src='./emoji assets/mouth/surprise.png'/></td>
-                <td><img src='./emoji assets/mouth/teeth.png'/></td>
+            <tr class='eyeImages'>
+                <td><img onclick="select(this)" src='./emoji assets/eyes/closed.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/eyes/laughing.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/eyes/long.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/eyes/normal.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/eyes/rolling.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/eyes/winking.png'/></td>
+            </tr>
+            <tr><th colspan=6>Select your mouth</th></tr>
+            <tr class='mouthImages'>
+                <td><img onclick="select(this)" src='./emoji assets/mouth/open.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/mouth/sad.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/mouth/smiling.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/mouth/straight.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/mouth/surprise.png'/></td>
+                <td><img onclick="select(this)" src='./emoji assets/mouth/teeth.png'/></td>
             </tr>
         </table>
         <br/>
-        <button type="submit" name='registerButton' class="btn btn-primary">Register</button>
+        <input type="hidden" id="imagelink" name="imagelink"></input>
+        <button type="submit" onclick='triggerCreateAvatar()' name='registerButton' class="btn btn-primary">Register</button>
         
         <script>
-            // create a canvas element
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-
-            // set the canvas dimensions
-            canvas.width = 500;
-            canvas.height = 500;
-
-            // load the avatar images
-            const skin = new Image();
-            const eyes = new Image();
-            const mouth = new Image();
-        
-            skin.src = "./emoji assets/skin/green.png";
-            eyes.src = "./emoji assets/eyes/laughing.png";
-            mouth.src = "./emoji assets/mouth/smiling.png";
             
-
-            // wait for all images to load
-            Promise.all([skin, eyes, mouth]).then(() => {
-            // draw the images on the canvas in the desired order
-            ctx.drawImage(skin, 0, 0, canvas.width, canvas.height);
-            ctx.drawImage(eyes, 0, 0, canvas.width, canvas.height);
-            ctx.drawImage(mouth, 0, 0, canvas.width, canvas.height);
-
-  // convert the canvas to a data URL for display or download
-            const avatarDataURL = canvas.toDataURL();
-            console.log(avatarDataURL);
+            var skinSelected = './emoji assets/skin/green.png';
+            var eyeSelected ='./emoji assets/eyes/closed.png';
+            var mouthSelected = './emoji assets/mouth/open.png';
 
 
-  // do something with the avatar data URL, such as displaying it on the page or downloading it
-});
+            function select(item){
+                console.log(item);
+                console.log(item.style.borderColor);
+                setSelect(item);
+                itemClassName= item.parentElement.parentElement.className;
+                const fulltable = document.getElementsByClassName(itemClassName)[0];
+                
+                tableItems = fulltable.getElementsByTagName('td');
+
+                [...tableItems].forEach(element => {
+                    if (element.getElementsByTagName('img')[0] == item){
+                        console.log('huzzahh');
+                    } else {setSelectBack(element.getElementsByTagName('img')[0])}
+                    console.log(element.getElementsByTagName('img')[0]);
+                    
+                });
+                switch (itemClassName){
+                    case 'skinImages':
+                        console.log(item.getAttribute('src'));
+                        skinSelected = item.getAttribute('src');
+                        break;
+
+                        
+                    case 'eyeImages':
+                        console.log(item.getAttribute('src'));
+                        eyeSelected = item.getAttribute('src');
+                        console.log(skinSelected);
+                        break;
+
+                    case 'mouthImages':
+                        console.log(item.getAttribute('src'));
+                        mouthSelected = item.getAttribute('src');
+                        triggerCreateAvatar();
+                        break;
+
+                }                  
+
+            }
+            function setSelectBack(item){
+                item.style.border = '';
+                item.style.borderStyle = '';
+                item.style.borderColor = '';
+                item.style.backgroundColor = '';
+
+            }
+            function setSelect(item){
+                item.style.backgroundColor = 'red';
+                item.style.border = '3px';
+                item.style.borderStyle = 'solid';
+                item.style.borderColor = 'orange';
+            }
+            function triggerCreateAvatar(){
+                var avatarLink = createAvatar(skinSelected,eyeSelected,mouthSelected);
+              Promise.all([avatarLink]).then(() => {
+                console.log("avatarlink",avatarLink);
+                setAvatarLocalStorage();
+                console.log('triggered');
+                //might delete
+                document.getElementById('imagelink').setAttribute('value',localStorage.getItem('avatar'));
+                });
+            }
+
+       
+
 
         </script>
         <?php
             session_start();
             $nickname ='';
-            $userAvatar ='';
+            $_SESSION['avatarImageFile'] = $_POST['imagelink'];
 
             if (!empty($_POST['nickname'])){
-                $nickname = $_POST['nickname'];
-                echo $nickname;
+                $nicknamePre = $_POST['nickname'];
+                echo $nicknamePre;
                 } 
                 else {echo "no nickname was entered";}
-            if (!empty($_POST['avatar'])){
-                    $userAvatar = $_POST['avatar'];
-                    } 
-                    else {echo "no avatar was selected";}
                     $firstreg = 0;
             $pattern = '/\W/'; //used to detect any non-word character
             if(isset($_POST['registerButton']) and $firstreg == 0){
             echo "register button";
             if (!empty($_POST['nickname'])){
                 $firstreg += 1;
-                if (preg_match($pattern,$nickname)){
+                if (preg_match($pattern,$nicknamePre)){
                     echo "\n unsuitable username";
-                    echo "<script>elem = document.getElementById('basic-addon4'); elem.style.visibility='visible';document.getElementsByName('nickname')[0].className='form-control is-invalid';document.getElementById('nickNameBox').setAttribute('value','$nickname'); console.log('it happened');</script>";
+                    echo "<script>elem = document.getElementById('basic-addon4'); elem.style.visibility='visible';document.getElementsByName('nickname')[0].className='form-control is-invalid';document.getElementById('nickNameBox').setAttribute('value','$nicknamePre'); console.log('it happened');</script>";
                 } else{ 
                     echo "\n suitable username <script>elem = document.getElementById('basic-addon4'); elem.style.visibility='hidden'; elem.style.bordercolor=''; console.log('it happened');</script>";
                      $firstreg += 1;
+                     $nickname = $_POST['nickname'];
                      setcookie("currentUser",$nickname, time() + (86400*5), "/");
                     $_SESSION['currentUser']= $nickname; }
+            } else {
+                echo "<script>elem = document.getElementById('basic-addon4');document.getElementsByName('nickname')[0].className='form-control is-invalid';document.getElementById('nickNameBox').setAttribute('value','$nicknamePre'); console.log('it happened');</script>";
             }
             }
-            $cookievalue = [$nickname,$userScore,$userAvatar];
 
         ?>
     </form>

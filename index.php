@@ -24,6 +24,7 @@
 
     </style>  
     <link rel="stylesheet" type="text/css" href="stylesPairs.css"/>
+    <script src ='./script.js'></script>
   </head>
 
 <body>
@@ -36,6 +37,7 @@
     <h1 >Welcome to Pairs</h1>
     <?php 
         session_start() ;
+
         if (isset($_COOKIE['currentUser'])){
             echo "<a style='background-color:green;'class='btn btn-success btn-lg' href='./bootspairs.php' role='button'>Click Here To Play</a>";
             echo "<script>document.getElementsByName('leaderboard')[0].style.display='';</script>";
@@ -46,7 +48,7 @@
     <br/>
 
     </div>
-</body>
+</body >
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
 </html>

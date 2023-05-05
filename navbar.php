@@ -1,6 +1,9 @@
 <head>
 <style>
-		
+		img{
+			width:2rem;
+			height:2rem;
+		}
 		ul.menu{
 			list-style-type: none;
 			margin: 0;
@@ -13,7 +16,8 @@
 			background-color: rgb(0,83,161);
 			overflow:hidden;}
 
-		ul.menu li{float: left;}
+		ul.menu li{float: left;
+			font-size: 12px;}
 		ul.menu li a{
 			display : block;
 			color: white;
@@ -21,7 +25,7 @@
 			width: 5cm;
 			padding-top: 10px;
 			text-align: center;
-            font-size: 12px;
+
 			text-decoration:none;
             font-family: "Verdana";
 
@@ -37,6 +41,11 @@
 		}
 		ul.menu li{float: left;
 		margin-left:25vw;}
+		ul.menu li a{
+			font-size:8px;
+			display : inline;
+		}
+
 
 	}
 
@@ -47,13 +56,13 @@
 
 		</style>
 	</head>
-	<body>
+	<body onload='addProfile()'>
 
 		<ul id='menuNav' class="menu">
-			<li><a href="./index.php">Home</a></li>
+			<li id ='homeLink' ><a href="./index.php">Home</a></li>
 			<li id ='floaters'><a href="./bootspairs.php">Play Pairs</a></li>
 			<li id ='floaters' name ='leaderboard' style="display:none;"><a href="./leaderboard.php">Leaderboard</a></li>
-			<li id ='floaters'><a href="./registration.php">Register</a></li>						
+			<li id ='floaters'><a href="./registrationWithAvatar.php">Register</a></li>						
 		</ul>
 		
 

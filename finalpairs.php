@@ -17,7 +17,7 @@
             margin-top:45px;
             margin-bottom:20px;
             position:relative;
-            height:95%;
+            height:80vhS;
             width: 60vw;
             padding:13px;
             box-shadow: 6px 6px 7px 5px red ;
@@ -79,7 +79,7 @@
   margin:45px;
 
 }
-button {
+button, h1 {
   margin: 0;
   position: absolute;
   top: 50%;
@@ -122,7 +122,8 @@ button {
             </div>
             <div class="col-sm-8">
             <br/>
-    <button onclick="showcontent()" type="button" class="btn btn-outline-success">Start Game</button>
+    <button onclick="showcontent()" type="button" class="btn btn-success">Start Game</button>
+    <h1 style="top:60%;color:white">Play the game by matching the cards</h1>
     <br/>
     <div class="game-board">
         <div class="grid-container">
@@ -167,6 +168,7 @@ button {
               <div style="background-color:white;" class="card-back">Back</div>
             </div>
         </div>
+        <h3>To replay/restart refresh your tab - Click Ctrl + R </h3>
         
 
     </div>
@@ -196,7 +198,6 @@ button {
         firstclick=looking;
         item = firstclick.getElementsByTagName('img')[0];
         firstclickImage= item.getAttribute('src');
-        
       } else {
         secondClick=looking;
         item = secondClick.getElementsByTagName('img')[0];
@@ -208,12 +209,14 @@ button {
           console.log("it's a match");
           updateScore();
           firstclick.style.pointerEvents = 'none';
-          firstclick.style.borderColor = 'green';
-          secondClick.style.borderColor = 'green';
+          firstclick.style.bordercolor = 'green';
+          secondClick.style.bordercolor = 'green';
           secondClick.style.pointerEvents = 'none';
           card_matches += 1;
           if (card_matches == (card_array.length/2)){
             console.log("done");
+            gameOver();
+
             setCookie('userScore',score,5);
           }
 
@@ -223,17 +226,47 @@ button {
           (function flipcard(){
             firstclick.classList.remove('is-flipped');
             secondClick.classList.remove('is-flipped');
-            
           })();
-          
          break;
         }
         firstclick = 0;secondClick = 0;
       }
+
+      
     }
     var cards = document.querySelectorAll('.card-body');
     [...cards].forEach((card)=>{ card.addEventListener('click', async function() {card.classList.add('is-flipped');registerClicks();await delay(1200);findCard(this); });});
-    const icons = ["./assets/bear.png","./assets/lion.png",'./assets/zebra.png','./assets/tiger.png','./assets/horse.png','./assets/squirrel.png','./assets/sheep.png','./assets/hippo.png'];
+    const icons = [];
+    const eyes =['./emoji assets/eyes/closed.png','./emoji assets/eyes/laughing.png','./emoji assets/eyes/long.png','./emoji assets/eyes/normal.png','./emoji assets/eyes/rolling.png','./emoji assets/eyes/winking.png'];
+    const mouth =['./emoji assets/mouth/surprise.png','./emoji assets/mouth/teeth.png','./emoji assets/mouth/smiling.png','./emoji assets/mouth/straight.png','./emoji assets/mouth/sad.png','./emoji assets/mouth/open.png'];
+    const skin = ['./emoji assets/skin/green.png','./emoji assets/skin/red.png','./emoji assets/skin/yellow.png'];
+    for (let i =0;i<15;i++){
+    let rand1 = Math.floor(Math.random() * 6);
+    let rand2 = Math.floor(Math.random() * 6);
+    let rand3 = Math.floor(Math.random() * 3);
+
+    loadImages([skin[rand3],mouth[rand2],eyes[rand1]]).then((images) => {
+  // call the layerImages function with the loaded images
+  return layerImages(images[0], images[1], images[2]);
+}).then((layeredDataURL) => {
+  console.log('lala',layeredDataURL);
+  if (icons.includes(layeredDataURL) == false){
+  icons.push(layeredDataURL);}
+  console.log(icons);
+  generatePictures(character_array);
+  if (character_array.length == 10){
+  (function populateCards(){
+      index=0
+      for (let x of card_array){
+        x.innerHTML= "<img src= '" + character_array[index] + "'/>";
+        index++;
+      }
+    })();}
+    // do something with the resulting data URL, such as displaying it on the page or downloading it
+}).catch((error) => {
+  // handle errors when loading or layering the images
+  
+}); }
     
     function StartTimer(){
         startTime = Date.now();
@@ -262,25 +295,14 @@ button {
       score += Score;
       document.getElementById("score").innerHTML = "Score: " + score ;
     }
-
-    function switchOffPointerEvents(){
-      
-    [...cards].forEach((card)=>{ card.style.pointerEvents = 'none'});
+    function gameOver(){
+      var Score = Math.floor((clicks / time) * 10) + 1;
+      score += Score;
+      document.getElementById("score").innerHTML += "<br/><strong style='color:red'>GAME OVER</strong>" ;
+      document.querySelector("h3").style.visibility= 'visible';
     }
 
-    function switchONPointerEvents(){
-      
-      [...cards].forEach((card)=>{ 
-        /*if(card.style.borderColor = 'green'){
-          card.style.pointerEvents = 'none';
-        }
-        else{*/
-          card.style.pointerEvents = 'initial'/*;}*/
-       });
-      
-  
-      }
-
+    
 
     function registerClicks(){
       clicks += 1;
@@ -301,6 +323,8 @@ button {
       document.getElementById("counters").style.display= 'initial';
       document.querySelector(".game-board").style.visibility= 'visible';
       document.querySelector("button").style.display= 'none';
+      document.querySelector("h1").style.display= 'none';
+      document.querySelector("h3").style.visibility= 'hidden';
       StartTimer();
 
     }
@@ -316,30 +340,74 @@ button {
         array[j] = temporary;
 
     }
-    return array;
+    
 }  
     function generatePictures(character_array){
-      shuffleArray(icons);
-      for (let x = 0; x< 5;x++){
-        character_array.push(icons[x]);
-        character_array.push(icons[x]);
-      }
+        shuffleArray(icons);
+      
+      
+        icons.forEach(element => {
+            if ((typeof element !== undefined) && (character_array.includes(element) == false) && (character_array.length < 10) ) {
+            character_array.push(element);
+            character_array.push(element);}
+        });
+        shuffleArray(character_array);
+            
+      
+ 
       console.log(character_array);
     }
-    generatePictures(character_array);
-    character_array=shuffleArray(character_array);
+    
+ 
     console.log(character_array)
 
     var card_List = document.querySelectorAll('.card-back');
     var card_array = [...card_List];
     console.log(card_array);
-    (function populateCards(){
-      index=0
-      for (let x of card_array){
-        x.innerHTML= "<img src= '" + character_array[index] + "'/>";
-        index++;
-      }
-    })();
+    
+
+
+
+    function loadImages(imageURLs) {
+  return Promise.all(imageURLs.map((url) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        resolve(img);
+      };
+      img.onerror = (error) => {
+        reject(error);
+      };
+      img.src = url;
+    });
+  }));
+}
+
+function layerImages(skin, eyes, mouth) {
+  return new Promise((resolve, reject) => {
+    // create a canvas element
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // set the canvas dimensions
+    canvas.width = 500;
+    canvas.height = 500;
+
+    // draw the images on the canvas in the desired order
+    ctx.drawImage(skin, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(eyes, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(mouth, 0, 0, canvas.width, canvas.height);
+
+    // convert the canvas to a data URL and resolve the promise
+    const layeredDataURL = canvas.toDataURL();
+    resolve(layeredDataURL);
+  });
+}
+
+
+
+
+
 
 
 

@@ -87,6 +87,7 @@ button {
 
 
     </style>
+        <script src ='./script.js'></script>
   </head>
 
 <body>
@@ -279,6 +280,8 @@ button {
         index++;
       }
     })();
+
+    
 
 
 

@@ -44,6 +44,8 @@
     <!--In the body we add our content -->
     <?php 
         include './navbar.php'; ?>
+                
+
 
 
 
@@ -58,59 +60,123 @@
                     <th>Player Name</th>
                     <th id="noStyle">Score</th>
                 </tr>
+                
             </thead>
-            <tbody id='tbody'></tbody>
+            <tbody id='tbody'>
+            <tr id=placeholder> <td>No Players</td> <td>No Scores To Show</td></tr>
+            </tbody>
         </table>
 
     </div>
 
 
-    <script >
+    <script>
+        
+
+        function sortThroughArray(list){
+            let i,j;
+            for (i=0; i < list.length; i++){
+                for (j = 0; j < list.length -i - 1; j++ ){
+                    if (list[j].score < list[j + 1].score ){
+                        var temp = list[j];
+                        list[j] = list[j+1];
+                        list[j+1] = temp;
+            }
+        }
+     }
+
+     return list; };
+    
         //import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+        /*fetch('./leaderboard.json')
+            .then((response) => response.json())
+            .then((json) => json_contents = json);
+        console.log('contents',json_contents); */
+
+        function triggerPopulateTable(){
+            sortedList.forEach(element => {
+                populateTable(element.user,element.score)
+
+            });
+
+        }
+
+
+
+ 
+  
         
              function populateTable(username,mark){
-                console.log('hello');
+                document.getElementById('placeholder').style.display= 'none';
+                
                 let table = document.getElementById('tbody');
-                console.log(table);
                 let row = table.insertRow(-1); 
                 let cell1 = row.insertCell(0);
                 let cell2 = row.insertCell(1);
-            
-
    // Add data to c1 and c2
                 cell1.innerText = username;
                 cell2.innerText = mark;
 
 
-            console.log(document.getElementsByTagName('table').innerHTML);
+            
             };
     </script>
-            <?php
-        session_start() ;
-        $avatar = $_COOKIE['userAvatar'];
+    <?php
+        session_start();
+
         if (isset($_COOKIE['currentUser'])){
-            echo "<script>document.getElementsByName('leaderboard')[0].style.display='';console.log('$avatar')</script>";
+            echo "<script>document.getElementsByName('leaderboard')[0].style.display='';</script>";
             } else{
                 echo "<script>window.location.replace('./index.php');</script>";
                 }
+
+
+        //read in the json file
+        $json_file = file_get_contents('./leaderboard.json');
+
+        //decode the json file
+        $data_from_json = json_decode($json_file,true);
+        
+        $add_data = array('user' => $_COOKIE['currentUser'],'score' => intval($_COOKIE['userScore']) );
+        array_push($data_from_json,$add_data);
+        $jsonData = json_encode($data_from_json);
+
+        if(file_put_contents(__DIR__ . '/leaderboard.json',$jsonData)){
+            echo "<script>console.log('success');</script>";
+
+        } else { echo "<script>console.log('fail');</script>";} 
+
+        //read in the json file
+        $json_file_updated = file_get_contents('leaderboard.json');
+
+        //decode the json file
+        $data_json = json_decode($json_file_updated,true);
+        $data_json = json_encode($data_json);
+
+        echo "<script>console.log('stuff $data_json');var sortedList = sortThroughArray($data_json);triggerPopulateTable()</script>";
+        //print_r($data_json);
+        //echo "<script>console.log('$data_json');</script>";
+
+
+
+
+
+        ?>
+        <script>
+            console.log(sortedList);
+        </script>
+
+
+
+
+
+
+
             
 
-                /*$table = $_SESSION['usersPast']; */
 
 
-        if(!empty( $_SESSION['usersPast'])){
-            $table = $_SESSION['usersPast'];
-            $table[$_COOKIE['currentUser']] = $_COOKIE['userScore'];
-            arsort($table);
-            $_SESSION['usersPast'] = $table; 
-        } else{
-            $table[$_COOKIE['currentUser']] = $_COOKIE['userScore'];
-            arsort($table);
-            $_SESSION['usersPast'] = $table; 
-        }
-        foreach($_SESSION['usersPast'] as $x => $x_value) {
-            echo "<script>  populateTable('$x','$x_value');</script>";
-          } ?>
+    
 
 
 </body>
