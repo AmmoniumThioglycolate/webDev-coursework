@@ -1,5 +1,7 @@
 <head>
+	<!--This php script is then included in each script to insert the navbar. It is used in an effort to avoid repetition-->
 <style>
+	/*THIS IS THE SCRIPT THAT STYLES TEH NAVBAR*/ 
 		img{
 			width:2rem;
 			height:2rem;
@@ -20,12 +22,12 @@
 			font-size: 12px;}
 		ul.menu li a{
 			display : block;
+			font-weight:bold;
 			color: white;
 			height:0.9cm;
 			width: 5cm;
 			padding-top: 10px;
 			text-align: center;
-
 			text-decoration:none;
             font-family: "Verdana";
 
@@ -34,6 +36,8 @@
 			float:right;
 		}
 		ul.menu li a:hover{background-color:rgb(13,140,255);}
+		
+		/* When the screen size reduces below 756px i wanted the items in the navigation bar to change position*/
 		@media only screen and (max-width:756px){
 			#floaters{
 			float:left;
@@ -55,14 +59,20 @@
 
 
 		</style>
+		<?php 
+		//This calls addprofile function found in the js script file. This adds the profile picture to the navbar that is stored in the computer's local storage
+			if(isset($_COOKIE['currentUser'])){
+				echo "<script>document.querySelector('body').setAttribute('onload','addProfile()')</script>";
+			}
+		?>
 	</head>
-	<body onload='addProfile()'>
-
+	<body>
+ 		<!--This the list of page links-->
 		<ul id='menuNav' class="menu">
-			<li id ='homeLink' ><a href="./index.php">Home</a></li>
-			<li id ='floaters'><a href="./bootspairs.php">Play Pairs</a></li>
+			<li id ='homeLink' name='home' ><a href="./index.php">Home</a></li>
+			<li id ='floaters' name='memory'><a href="./pairs.php">Play Pairs</a></li>
 			<li id ='floaters' name ='leaderboard' style="display:none;"><a href="./leaderboard.php">Leaderboard</a></li>
-			<li id ='floaters'><a href="./registrationWithAvatar.php">Register</a></li>						
+			<li id ='floaters' name='register'><a href="./registration.php">Register</a></li>						
 		</ul>
 		
 

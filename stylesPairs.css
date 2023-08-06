@@ -1,7 +1,9 @@
-body{
-    background-image: url('backgroundimage.jpg');
-    background-size: cover;
+#main,body{
+    /* I had to compress the backgroudn image in order to make it load faster*/
+    background-image: url(./backgroundImageCompressed.jpg);
+    background-size: cover; 
     background-attachment: fixed;
+
 
 }
 p{

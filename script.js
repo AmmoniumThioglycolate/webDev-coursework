@@ -1,25 +1,25 @@
-/*function populateTable(username,mark){
-    document.getElementById("leaderid").append(username);
-    document.getElementById("leaderid").append(mark);
 
-}; */
-var kellogs = 'kellyClarkson';
-
+//this function delays the pag eload for a while
+function delay(time) {return new Promise(resolve => setTimeout(resolve, time))}
+//This adds the avatar profile to the navigation bar
 function addProfile(){
     if (typeof localStorage.getItem('avatar') !== undefined){
         console.log('entered localstorage');
         let listItem = document.createElement('li');
+    
 
         let Image = document.createElement("img");
         Image.setAttribute('src',localStorage.getItem('avatar'));
+        
         listItem.appendChild(Image);
 
-        document.getElementById('menuNav').insertBefore(Image,document.getElementById('menuNav')[1]);
+        document.getElementById('menuNav').insertBefore(listItem,document.getElementById('menuNav')[1]);
     }
 
 
 };
 
+// this function creates a cookie
 function setCookie(cname, cvalue, expirydays){
     const date = new Date();
     date.setTime(date.getTime() + (expirydays*24*60*60*1000));
@@ -27,6 +27,7 @@ function setCookie(cname, cvalue, expirydays){
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+// this will store the avatar url to the local storage of the user's computer
 function setAvatarLocalStorage(){
     window.localStorage.setItem('avatar',avatarUrl);
 }
@@ -59,33 +60,13 @@ function createAvatar(skinInput,eyeInput,mouthInput){
     ctx.drawImage(eyes, 0, 0, canvas.width, canvas.height);
     ctx.drawImage(mouth, 0, 0, canvas.width, canvas.height);
 
-// convert the canvas to a data URL for display or download
+// convert the canvas to a data URL for display and then to reload it
     const avatarDataURL = canvas.toDataURL();
     avatarUrl = avatarDataURL;
     console.log(avatarDataURL);
     return avatarDataURL;
-// do something with the avatar data URL, such as displaying it on the page or downloading it
+
 }); }
 
 
    
-
-    /*list.forEach(element => {
-        index++;
-
-        if (max < element.user){
-            max = list[index].score;
-            let temporary = 
-
-
-
-        } 
-        console.log(element.user); 
-        
-
-    }); */
-    const iconsEyes = ['./emoji assets/eyes/closed.png','./emoji assets/eyes/laughing.png','./emoji assets/eyes/long.png','./emoji assets/eyes/normal.png','./emoji assets/eyes/rolling.png','./emoji assets/eyes/winking.png'];
-    const iconsSkin = ['./emoji assets/skin/green.png','./emoji assets/skin/red.png','./emoji assets/skin/yellow.png'];
-    const iconsMouths = ['./emoji assets/mouth/open.png','./emoji assets/mouth/sad.png','./emoji assets/mouth/smiling.png','./emoji assets/mouth/straight.png','./emoji assets/mouth/surprise.png','./emoji assets/mouth/teeth.png'];
-    var  iconS=[];
-
