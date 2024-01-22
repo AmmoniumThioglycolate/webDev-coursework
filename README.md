@@ -29,3 +29,5 @@ When the game is over a bootstrap modal appears, and you're given the choice whe
 A leaderboard showing the top scores (the scores are stored in a json file hosted on the server).
 Moving the mouse on the page triggers confetti (a function imported from the web)
 Mouse click triggers (triumphant) music.
+
+#Test for pu;; request. This is for my own puproses. IGNORE
